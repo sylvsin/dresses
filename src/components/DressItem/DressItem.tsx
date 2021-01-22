@@ -1,6 +1,6 @@
-import React from 'react'
-import { Dress } from '../../context/DressContext'
-import formatCurrency from '../../util'
+import React from 'react';
+import { Dress } from '../../context/DressContext';
+import formatCurrency  from '../../util';
 import './Product.css'
 
 const DressItem: React.FC<{dress: Dress}> = ({dress}) => {
