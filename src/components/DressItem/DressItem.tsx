@@ -1,10 +1,26 @@
 import React from 'react'
-import './DressItem.css'
+import { Dress } from '../../context/DressContext'
+import formatCurrency from '../../util'
+import './Product.css'
 
-const DressItem: React.FC = () => {
+const DressItem: React.FC<{dress: Dress}> = ({dress}) => {
   return (
-    <div className="dress-list">
-      <span>DressItem works!</span>
+    <div className="product">
+      <a href="#">
+        <img src={dress.image} alt={dress.title} />
+        <p>
+            { dress.title }
+        </p>
+      </a>
+
+      <div className="product-price">
+            <div>
+                { formatCurrency(dress.price) }
+            </div>
+            
+            <button>Add To Cart</button>
+        </div>
+
     </div>
   )
 }
