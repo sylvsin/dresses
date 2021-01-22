@@ -14,6 +14,7 @@ import './App.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import DressContextProvider from './context/DressContext';
 
 library.add(fas);
 
@@ -49,57 +50,59 @@ const App: React.FC = () => {
         <a href="/">L Shopping</a>
       </header>
       <div className="Container">
-        <Router>
-          <div style={{ display: "flex" }}>
-            <div className="sidebar"
-              style={{ 
-                padding: "20px",
-                width: "20%",
-                background: "#f0f0f0",
-              }}
-            >
-              <ul style={ dressesStyle }>
-                <li>
-                  <NavLink exact to="/" activeClassName="selected" activeStyle={{fontWeight: "bold",color: "#2F4F4F"}}><img src="/images/logo1.jpg"  alt=''/></NavLink>
-                </li>
-                <li>
-                  <NavLink exact to="/" activeClassName="selected" activeStyle={{fontWeight: "bold",color: "#2F4F4F"}} style={{ textDecoration: "none" }}><FontAwesomeIcon className="fas fa-home" icon='home'/>Dresses</NavLink>
-                </li>
-                <li>
-                  <NavLink exact to="/cart" activeClassName="selected" activeStyle={{fontWeight: "bold",color: "#2F4F4F"}} style={{ textDecoration: "none" }}><FontAwesomeIcon className="fas fa-cart-plus" icon='cart-plus'/>{" "}  Cart</NavLink>
-                </li>
-                <li>
-                  <NavLink exact to="/admin" activeClassName="selected" activeStyle={{fontWeight: "bold",color: "#2F4F4F"}} style={{ textDecoration: "none" }}><FontAwesomeIcon className="fas fa-user" icon='user' />{" "} Admin</NavLink>
-                </li>
-              </ul>
+        <DressContextProvider>
+          <Router>
+            <div style={{ display: "flex" }}>
+              <div className="sidebar"
+                style={{ 
+                  padding: "20px",
+                  width: "20%",
+                  background: "#f0f0f0",
+                }}
+              >
+                <ul style={ dressesStyle }>
+                  <li>
+                    <NavLink exact to="/" activeClassName="selected" activeStyle={{fontWeight: "bold",color: "#2F4F4F"}}><img src="/images/logo1.jpg"  alt=''/></NavLink>
+                  </li>
+                  <li>
+                    <NavLink exact to="/" activeClassName="selected" activeStyle={{fontWeight: "bold",color: "#2F4F4F"}} style={{ textDecoration: "none" }}><FontAwesomeIcon className="fas fa-home" icon='home'/>Dresses</NavLink>
+                  </li>
+                  <li>
+                    <NavLink exact to="/cart" activeClassName="selected" activeStyle={{fontWeight: "bold",color: "#2F4F4F"}} style={{ textDecoration: "none" }}><FontAwesomeIcon className="fas fa-cart-plus" icon='cart-plus'/>{" "}  Cart</NavLink>
+                  </li>
+                  <li>
+                    <NavLink exact to="/admin" activeClassName="selected" activeStyle={{fontWeight: "bold",color: "#2F4F4F"}} style={{ textDecoration: "none" }}><FontAwesomeIcon className="fas fa-user" icon='user' />{" "} Admin</NavLink>
+                  </li>
+                </ul>
 
-              <Switch>
-                {
-                  routes.map((route, index) => (
-                    <Route
-                      key={index}
-                      path={route.path}
-                      children={<route.sidebar />}
-                    />
-                ))}
-              </Switch>
-            </div>
+                <Switch>
+                  {
+                    routes.map((route, index) => (
+                      <Route
+                        key={index}
+                        path={route.path}
+                        children={<route.sidebar />}
+                      />
+                  ))}
+                </Switch>
+              </div>
 
-            <div style={{ flex: 1, padding: "10px", backgroundColor: "eee" }}>
-              <Switch>
-                {
-                  routes.map((route, index) => (
-                    <Route
-                      key={index}
-                      path={route.path}
-                      exact={route.exact}
-                      children={<route.main />}
-                    />
-                ))}
-              </Switch>
+              <div style={{ flex: 1, padding: "10px", backgroundColor: "eee" }}>
+                <Switch>
+                  {
+                    routes.map((route, index) => (
+                      <Route
+                        key={index}
+                        path={route.path}
+                        exact={route.exact}
+                        children={<route.main />}
+                      />
+                  ))}
+                </Switch>
+              </div>
             </div>
-          </div>
-        </Router>
+          </Router>
+        </DressContextProvider>
       </div>
       <footer className="footer">
         All right is reserved
