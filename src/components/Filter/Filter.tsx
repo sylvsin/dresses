@@ -8,7 +8,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 library.add(fas);
 
 const Filter: React.FC = () => {
-  const {product, size, sort, sortDresses, filterDresses } = useContext(DressContext);
+  const {product, size, sort, sortDresses, filterDresses, cartItems } = useContext(DressContext);
 
   return (
     
@@ -41,7 +41,7 @@ const Filter: React.FC = () => {
         </select>
       </div>
 
-      {/* <div>
+      <div>
       {
         cartItems.length === 0? <div>
           <FontAwesomeIcon className="fas fa-cart-plus" icon='cart-plus'/> Cart is empty </div>
@@ -55,7 +55,7 @@ const Filter: React.FC = () => {
               </a>
           </div>
       } 
-      </div> */}
+      </div>
     </div>  
     
 
