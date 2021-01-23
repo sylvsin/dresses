@@ -1,4 +1,4 @@
-import React, { ChangeEvent, createContext, useState } from 'react';
+import React, { ChangeEvent, createContext, useEffect, useState } from 'react';
 import { products } from '../Data';
 
 export class Dress {
@@ -16,7 +16,12 @@ export interface IDressContext {
     size: string;
     sort: string;
     sortDresses: (sort: any) => void;
-    filterDresses: (size: any) => void; 
+    filterDresses: (size: any) => void;
+    cartItems: Dress[];
+    addToCart: (dress: Dress) => void;
+    removeFromCart: (id: number) => void;
+    decrementQuantity: (dress: Dress) => void;
+     
 }
 
 export const DressContext = createContext<IDressContext>({
@@ -25,11 +30,29 @@ export const DressContext = createContext<IDressContext>({
     sort: "",
     sortDresses: (sort: any) => {},
     filterDresses: (size: any) => {},
+    cartItems: [],
+    addToCart: (dress: Dress) => {},
+    removeFromCart: (id: number) => {},
+    decrementQuantity: (dress: Dress) => {},
 });
+
+const myDresses = () => {
+  const localData = localStorage.getItem('cartItems');
+  return localData ? JSON.parse(localData) : [];
+}
 const DressContextProvider: React.FC = ({children}) => {
     const [product, setProduct] = useState<Dress[]>(products);
     const [size, setSize] = useState<string>("");
     const [sort, setSort] = useState<string>("");
+    const [cartItems, setCartItems] = useState<Dress[]>(myDresses);
+
+    useEffect(() => {
+      localStorage.setItem('cartItems', JSON.stringify(cartItems))
+    }, [cartItems]);
+
+    const removeFromCart = (id: number) => {
+      setCartItems(cartItems.filter(item => item._id !== id));
+    }
 
     const sortDresses = ({target: { value }, 
     }: ChangeEvent<HTMLSelectElement>) => {
@@ -72,9 +95,30 @@ const DressContextProvider: React.FC = ({children}) => {
         }
     }
 
+    const addToCart = (product: Dress) => {
+
+      const doesExist = cartItems.find(item => item._id === product._id);
+  
+      if(!doesExist) {
+        setCartItems([...cartItems, ...[{...product, count:1}]]);
+      } else {
+        const pos = cartItems.findIndex(item => item._id === product._id)
+        if(pos!==-1)
+        setCartItems([...cartItems.slice(0, pos), ...[{...cartItems[pos], count:cartItems[pos].count+1}], ...cartItems.slice(pos+1)]);
+      }
+    }
+
+    const decrementQuantity = (product: Dress) => {
+      const pos = cartItems.findIndex(item => item._id === product._id)
+        if(pos!==-1){
+          const count = cartItems[pos].count-1 < 1 ? 1 : cartItems[pos].count-1
+        setCartItems( [...cartItems.slice(0, pos), ...[{...cartItems[pos], count},], ...cartItems.slice(pos+1)]);
+      }
+    }
+
 
     return (
-        <DressContext.Provider value={{ product, sort, size, sortDresses, filterDresses, }}>
+        <DressContext.Provider value={{ product, sort, size, sortDresses, filterDresses, cartItems, addToCart, decrementQuantity, removeFromCart, }}>
             {children}
         </DressContext.Provider>
     );

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { Dress } from '../../context/DressContext';
+import React, { useContext, useState } from 'react';
+import {DressContext, Dress } from '../../context/DressContext';
 import formatCurrency  from '../../util';
 import './Product.css';
 import { Fade } from "react-awesome-reveal";
 
 const DressItem: React.FC<{dress: Dress}> = ({dress}) => {
+  const {addToCart} = useContext(DressContext);
   
   return (
     <div className="product">
@@ -21,7 +22,7 @@ const DressItem: React.FC<{dress: Dress}> = ({dress}) => {
                 { formatCurrency(dress.price) }
             </div>
             
-            <button>Add To Cart</button>
+            <button onClick={() => addToCart(dress)}>Add To Cart</button>
         </div>
       </Fade>
     </div>
