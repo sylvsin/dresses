@@ -56,14 +56,13 @@ main {
 } */
 
 footer {
-  /* grid-area: footer; */
   background-color: #203040;
   color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
-  position:absolute;
-  bottom:0;
+  position: fixed;
+  bottom: 0;
   width: 100%;
 }
 
@@ -87,12 +86,12 @@ footer {
 } */
 
 
-.filter-container{
+/* .filter-container{
   top: 1px;
-}
+} */
 
 /* Filter */
-.filter {
+/* .filter {
   display: flex;
   justify-content: space-between;
   padding: 1rem;
@@ -102,7 +101,7 @@ footer {
 
 .filter div {
   flex: 1;
-}
+} */
 
 /* Index.css */
 .cart-header {
