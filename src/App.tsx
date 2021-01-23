@@ -56,7 +56,7 @@ const App: React.FC = () => {
               <div className="sidebar"
                 style={{ 
                   padding: "20px",
-                  width: "20%",
+                  width: "15%",
                   background: "#f0f0f0",
                 }}
               >
