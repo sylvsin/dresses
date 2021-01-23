@@ -14,7 +14,7 @@ const Filter: React.FC = () => {
     
     <div className="filter">
       <div className="filter-result">
-        <strong>{product.length}</strong>
+        <strong>{product.length}</strong>{" "}
         Dresses
       </div>
 

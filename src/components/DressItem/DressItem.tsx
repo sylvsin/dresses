@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Dress } from '../../context/DressContext';
 import formatCurrency  from '../../util';
 import './Product.css';
 import { Fade } from "react-awesome-reveal";
 
 const DressItem: React.FC<{dress: Dress}> = ({dress}) => {
+  
   return (
     <div className="product">
       <Fade direction="down">
@@ -24,7 +25,7 @@ const DressItem: React.FC<{dress: Dress}> = ({dress}) => {
         </div>
       </Fade>
     </div>
-  )
+  );
 }
 
 export default DressItem
