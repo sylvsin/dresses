@@ -6,7 +6,7 @@ import './DressList.css';
 import { Fade } from "react-awesome-reveal";
 
 const DressList: React.FC = () => {
-  const { product } = useContext(DressContext)
+  const { products } = useContext(DressContext)
 
   return (
     <Fade direction="down">
@@ -17,7 +17,7 @@ const DressList: React.FC = () => {
         <div>
           <ul className="products">
             {
-              product.map((dress, i) => {
+              products.map((dress, i) => {
                 return(
                   <DressItem dress={dress} key={`${dress._id}-${dress.title}-${i}`}/>
                 )

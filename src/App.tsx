@@ -15,8 +15,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import DressContextProvider from './context/DressContext';
+import { AppContextProvider } from './context/AppContext';
 
 library.add(fas);
+
+const baseURL: string = "http://localhost:5000/api/";
 
 const App: React.FC = () => {
   const routes = [
@@ -50,6 +53,7 @@ const App: React.FC = () => {
         <a href="/">L Shopping</a>
       </header>
       <div className="Container">
+      <AppContextProvider baseUrl={baseURL}>
         <DressContextProvider>
           <Router>
             <div style={{ display: "flex" }}>
@@ -104,6 +108,7 @@ const App: React.FC = () => {
             </div>
           </Router>
         </DressContextProvider>
+      </AppContextProvider>
       </div>
       <footer className="footer">
         All right is reserved

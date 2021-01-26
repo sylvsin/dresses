@@ -8,13 +8,13 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 library.add(fas);
 
 const Filter: React.FC = () => {
-  const {product, size, sort, sortDresses, filterDresses, cartItems } = useContext(DressContext);
+  const {products, size, sort, sortDresses, filterDresses, cartItems } = useContext(DressContext);
 
   return (
     
     <div className="filter">
       <div className="filter-result">
-        <strong>{product.length}</strong>{" "}
+        <strong>{products.length}</strong>{" "}
         Dresses
       </div>
 
