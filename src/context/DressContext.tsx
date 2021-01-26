@@ -1,5 +1,6 @@
-import React, { ChangeEvent, createContext, useEffect, useState } from 'react';
+import React, { ChangeEvent, createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { products } from '../Data';
+import { AppContext } from './AppContext';
 
 export class Dress {
     _id!: number;
@@ -12,7 +13,7 @@ export class Dress {
 }
 
 export interface IDressContext {
-    product: Dress[];
+    products: Dress[];
     size: string;
     sort: string;
     sortDresses: (sort: any) => void;
@@ -25,7 +26,7 @@ export interface IDressContext {
 }
 
 export const DressContext = createContext<IDressContext>({
-    product: products,
+    products: [],
     size: "",
     sort: "",
     sortDresses: (sort: any) => {},
@@ -41,10 +42,11 @@ const myDresses = () => {
   return localData ? JSON.parse(localData) : [];
 }
 const DressContextProvider: React.FC = ({children}) => {
-    const [product, setProduct] = useState<Dress[]>(products);
+    const [products, setProducts] = useState<Dress[]>([]);
     const [size, setSize] = useState<string>("");
     const [sort, setSort] = useState<string>("");
     const [cartItems, setCartItems] = useState<Dress[]>(myDresses);
+    const { api } = useContext(AppContext);
 
     useEffect(() => {
       localStorage.setItem('cartItems', JSON.stringify(cartItems))
@@ -54,6 +56,24 @@ const DressContextProvider: React.FC = ({children}) => {
       setCartItems(cartItems.filter(item => item._id !== id));
     }
 
+    const fetchProduct = useCallback(() => {
+      if (api) {
+        api
+          .get("products")
+          .then((response) => {
+            return response.data;
+          })
+          .then((data) => {
+            setProducts(data);
+            console.log(data);
+          });
+      }
+    }, [api] );
+
+    useEffect(()=>{
+      fetchProduct()
+    },[]);
+
     const sortDresses = ({target: { value }, 
     }: ChangeEvent<HTMLSelectElement>) => {
       
@@ -61,7 +81,7 @@ const DressContextProvider: React.FC = ({children}) => {
         setSort(value);
       } else {
         setSort(value);
-        setProduct(
+        setProducts(
           products.slice().sort((a, b) => (
             value === "lowest"
             ? a.price > b.price
@@ -87,7 +107,7 @@ const DressContextProvider: React.FC = ({children}) => {
           setSize(value);
         } else {
           setSize(value);
-          setProduct(
+          setProducts(
             products.filter((dress) =>
               value === "ALL" ? true : dress.availableSizes.indexOf(value) >= 0
             )
@@ -118,7 +138,7 @@ const DressContextProvider: React.FC = ({children}) => {
 
 
     return (
-        <DressContext.Provider value={{ product, sort, size, sortDresses, filterDresses, cartItems, addToCart, decrementQuantity, removeFromCart, }}>
+        <DressContext.Provider value={{ products, sort, size, sortDresses, filterDresses, cartItems, addToCart, decrementQuantity, removeFromCart, }}>
             {children}
         </DressContext.Provider>
     );
