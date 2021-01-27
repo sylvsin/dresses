@@ -47,14 +47,6 @@ a:hover {
   height: 100%;
 }
 
-/* .sidebar {
-  height: 100vh;
-}
-
-main {
-  grid-area: main;
-} */
-
 footer {
   background-color: #203040;
   color: #fff;
@@ -66,45 +58,8 @@ footer {
   width: 100%;
 }
 
-/* .content {
-  display: flex;
-  flex-wrap: wrap;
-} */
-
-/* .main {
-  flex: 3 60rem;
-} */
-
-/* .button {
-  padding: 1rem;
-  border: 0.1rem #c0c0c0 solid;
-  background-color: #f0f0f0;
-  cursor: pointer;
-} */
-/* .button:hover {
-  border: 0.1rem #808080 solid;
-} */
-
-
-/* .filter-container{
-  top: 1px;
-} */
-
-/* Filter */
-/* .filter {
-  display: flex;
-  justify-content: space-between;
-  padding: 1rem;
-  margin: 1rem;
-  border-bottom: 0.1rem #c0c0c0 solid;
-}
-
-.filter div {
-  flex: 1;
-} */
-
 /* Index.css */
-.cart-header {
+/* .cart-header {
   display: flex;
   justify-content: space-between;
   padding: 1rem;
@@ -114,7 +69,7 @@ footer {
 
 .cart-header div {
   flex: 1;
-}
+} */
 
 .cart-items ul {
   list-style-type: none;
