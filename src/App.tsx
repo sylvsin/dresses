@@ -61,7 +61,7 @@ const App: React.FC = () => {
                 style={{ 
                   padding: "20px",
                   width: "15%",
-                  height: "140vh",
+                  height: "900rem",
                   background: "#f0f0f0",
                 }}
               >

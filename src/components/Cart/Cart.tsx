@@ -23,7 +23,7 @@ const Cart: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [address, setAddress] = useState<string>("");
-  const [createdAt, setCreatedAt] = useState<string>("");
+  const [createdAt, setCreatedAt] = useState<Date>();
   const [ product, setProduct ] = useState(null);
   const [modalState, setModalState] = useState(false);
 

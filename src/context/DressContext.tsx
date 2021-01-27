@@ -12,14 +12,14 @@ export class Dress {
     count!: number;
 }
 
-interface Order{
+export interface Order{
   name:string
   email:string
   address:string
   cartItems:Dress[]
   total:number
   _id:string
-  createdAt:string
+  createdAt:Date
   updatedAt:string
 }
 
@@ -35,6 +35,7 @@ export interface IDressContext {
     decrementQuantity: (dress: Dress) => void;
     order?: Order;
     createOrderItems: (item: any) => void;
+    orders: Order[];
 }
 
 export const DressContext = createContext<IDressContext>({
@@ -48,6 +49,7 @@ export const DressContext = createContext<IDressContext>({
     removeFromCart: (id: number) => {},
     decrementQuantity: (dress: Dress) => {},
     createOrderItems: (item: any) => {},
+    orders: [],
 });
 
 const myDresses = () => {
@@ -61,6 +63,7 @@ const DressContextProvider: React.FC = ({children}) => {
     const [cartItems, setCartItems] = useState<Dress[]>(myDresses);
     const { api } = useContext(AppContext);
     const [order, setOrder] = useState<Order>();
+    const [orders, setOrders] = useState<Order[]>([]);
 
     useEffect(() => {
       localStorage.setItem('cartItems', JSON.stringify(cartItems))
@@ -115,9 +118,27 @@ const DressContextProvider: React.FC = ({children}) => {
         })}
     };
 
+    const fetchOrders = useCallback(() => {
+      if (api) {
+        api
+          .get("orders")
+          .then((response) => {
+            return response.data;
+          })
+          .then((data) => {
+            setOrders(data);
+            console.log(data);
+          });
+      }
+    }, [api]);
+
     useEffect(()=>{
       fetchProduct()
-    },[]);
+    },[fetchProduct]);
+
+    useEffect(() => {
+      fetchOrders()
+    }, [fetchOrders]);
 
     const sortDresses = ({target: { value }, 
     }: ChangeEvent<HTMLSelectElement>) => {
@@ -152,11 +173,21 @@ const DressContextProvider: React.FC = ({children}) => {
           setSize(value);
         } else {
           setSize(value);
-          setProducts(
-            products.filter((dress) =>
-              value === "ALL" ? true : dress.availableSizes.indexOf(value) >= 0
-            )
-          );
+          if (api) {
+            api
+              .get("products")
+              .then((response) => {
+                return response.data;
+              })
+              .then((data:Dress[]) => {
+                setProducts(
+                  data.filter((dress) =>
+                    value === "ALL" ? true : dress.availableSizes.indexOf(value) >= 0
+                  )
+              );
+              
+              });
+            }
         }
     }
 
@@ -183,7 +214,7 @@ const DressContextProvider: React.FC = ({children}) => {
 
 
     return (
-        <DressContext.Provider value={{products, sort, size, sortDresses, filterDresses, cartItems, addToCart, decrementQuantity, removeFromCart, order, createOrderItems }}>
+        <DressContext.Provider value={{products, sort, size, sortDresses, filterDresses, cartItems, addToCart, decrementQuantity, removeFromCart, order, createOrderItems, orders }}>
             {children}
         </DressContext.Provider>
     );
