@@ -60,5 +60,9 @@
   },
   "devDependencies": {
     "@types/react-modal": "^3.10.6"
+  },
+  "engines": {
+    "node": "12.4.0",
+    "npm": "6.14.8"
   }
 }

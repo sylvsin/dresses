@@ -12,8 +12,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(cors())
 
-// app.use("/", express.static(__dirname + "/build"));
-// app.get("/", (req, res) => res.sendFile(__dirname + "/build/index.html"));
+app.use("/", express.static(__dirname + "/build"));
+app.get("/", (req, res) => res.sendFile(__dirname + "/build/index.html"));
 
 mongoose.connect(
   process.env.MONGODB_URL || "mongodb://localhost/sylwebshop",
