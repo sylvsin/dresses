@@ -47,7 +47,7 @@ const Filter: React.FC = () => {
           <FontAwesomeIcon className="fas fa-cart-plus" icon='cart-plus'/> Cart is empty </div>
           :
           <div>
-              <a href="/cart">
+              <a href="/Cart">
                 <FontAwesomeIcon className="fas fa-cart-plus" icon='cart-plus'/>{" "}
                 <button className="items-in-cart"> You have{" "}
                 <strong> {cartItems.reduce((a, c) => a + c.count, 0)}{" "} 
