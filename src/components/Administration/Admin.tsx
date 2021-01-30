@@ -2,11 +2,13 @@ import React, { useContext } from 'react';
 import './Admin.css';
 import Orders from '../Oders/Oders';
 import { DressContext } from '../../context/DressContext';
+import { Fade } from 'react-awesome-reveal';
 
 const Admin: React.FC = () => {
   const { orders } = useContext(DressContext);
 
   return (
+    <Fade direction="up">
     <div>
       <h2>Orders</h2>
       <div className="admin">
@@ -29,6 +31,7 @@ const Admin: React.FC = () => {
         }
       </div>
     </div>
+    </Fade>
   );
 }
 
