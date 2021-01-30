@@ -11,7 +11,7 @@ const Admin: React.FC = () => {
       <h2>Orders</h2>
       <div className="admin">
                 <div className="order-row orders-header"> 
-          <span className="center">ID</span>
+          <span className="center">Order</span>
           <span className="center">DATE</span>
           <span className="center">TOTAL</span>
           <span className="center">NAME</span>
