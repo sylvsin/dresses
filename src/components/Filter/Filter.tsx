@@ -5,6 +5,7 @@ import './Filter.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import { NavLink } from 'react-router-dom';
 library.add(fas);
 
 const Filter: React.FC = () => {
@@ -47,12 +48,12 @@ const Filter: React.FC = () => {
           <FontAwesomeIcon className="fas fa-cart-plus" icon='cart-plus'/> Cart is empty </div>
           :
           <div>
-              <a href="/Cart">
+              <NavLink to="/cart">
                 <FontAwesomeIcon className="fas fa-cart-plus" icon='cart-plus'/>{" "}
                 <button className="items-in-cart"> You have{" "}
                 <strong> {cartItems.reduce((a, c) => a + c.count, 0)}{" "} 
                   items </strong> in Cart </button>
-              </a>
+              </NavLink>
           </div>
       } 
       </div>
