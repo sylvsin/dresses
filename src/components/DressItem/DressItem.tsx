@@ -38,7 +38,7 @@ const DressItem: React.FC<{dress: Dress}> = ({dress}) => {
             setModalState(true)}}
         >
           <img src={dress.image} alt={dress.title} />
-          <p>
+          <p className="product-title">
               { dress.title }
           </p>
         </a>

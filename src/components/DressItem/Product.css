@@ -29,11 +29,14 @@
     max-height: 28rem;
 }
 
+.product-title {
+    text-align: center;
+}
+
 .product-price {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-right: 3.5rem;
 }
 
 .product-price button {
