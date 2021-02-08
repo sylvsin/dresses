@@ -4,6 +4,7 @@ import { Fade } from "react-awesome-reveal";
 import Modal from 'react-modal'
 import { DressContext } from '../../context/DressContext';
 import formatCurrency from '../../util';
+import { NavLink } from 'react-router-dom';
 
 const customStyles = {
   content : {
@@ -142,7 +143,7 @@ const Cart: React.FC = () => {
                     </strong>
                 </span>
                 <span className="center">
-                  <a href="/"><button className="add-new-product">Add New Product</button></a>
+                  <NavLink to="/" className="add-new-product">Add New Product</NavLink>
                 </span>
             </div>
           </Fade>

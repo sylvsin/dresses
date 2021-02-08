@@ -166,30 +166,34 @@ const DressContextProvider: React.FC = ({children}) => {
     };
 
     const filterDresses = ({
-        target: { value },
-      }: ChangeEvent<HTMLSelectElement>) => {
-        // imp
-        if (value === "") {
-          setSize(value);
-        } else {
-          setSize(value);
-          if (api) {
-            api
-              .get("products")
-              .then((response) => {
-                return response.data;
-              })
-              .then((data:Dress[]) => {
-                setProducts(
-                  data.filter((dress) =>
-                    value === "ALL" ? true : dress.availableSizes.indexOf(value) >= 0
-                  )
-              );
-              
-              });
-            }
+      target: { value },
+    }: ChangeEvent<HTMLSelectElement>) => {
+      // imp
+      if (value === "") {
+        setSize(value);
+      } else {
+        setSize(value);
+        if(api){
+          api
+          .get("products")
+          .then((response) => {
+            return response.data;
+          })
+          .then((data) => {
+            setProducts(data);
+            console.log(data);
+          });
+          api.get('products').then(result=>result.data).then((products:Dress[])=>{
+            setProducts(
+              products.filter((dress) =>
+                value === "ALL" ? true : dress.availableSizes.indexOf(value) >= 0
+              )
+            );
+  
+          })
         }
-    }
+      }
+    };
 
     const addToCart = (product: Dress) => {
 

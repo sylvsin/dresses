@@ -19,7 +19,7 @@ import { AppContextProvider } from './context/AppContext';
 
 library.add(fas);
 
-const baseURL: string = "http://localhost:5000/api/";
+const baseURL: string = `${process.env.REACT_APP_IS_PRODUCTION?process.env.REACT_APP_REMOTE_URL:process.env.REACT_APP_LOCAL_PATH}/api/`;
 
 const App: React.FC = () => {
   const routes = [
