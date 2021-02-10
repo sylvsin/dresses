@@ -1,9 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { ChangeEvent, useContext, useState } from 'react';
 import {DressContext, Dress } from '../../context/DressContext';
 import formatCurrency  from '../../util';
 import './Product.css';
 import { Fade } from "react-awesome-reveal";
 import Modal from 'react-modal'
+import { join } from 'path';
 
 const customStyles = {
   content : {
@@ -21,6 +22,7 @@ const DressItem: React.FC<{dress: Dress}> = ({dress}) => {
   const {addToCart} = useContext(DressContext);
   const [ product, setProduct ] = useState(null);
   const [modalState, setModalState] = useState(false);
+  const [choseSize, SetChoseSize] = useState<string>("");
 
   const isOpen = (product: any) => {
     setProduct(product);
@@ -30,6 +32,12 @@ const DressItem: React.FC<{dress: Dress}> = ({dress}) => {
       setProduct(product);
       setModalState(false)
   }
+
+  const chosenSize = ({
+    target: { value },
+  }: ChangeEvent<HTMLSelectElement>) => {
+    SetChoseSize(value);
+  }
   
   return (
     <div className="product">
@@ -38,17 +46,27 @@ const DressItem: React.FC<{dress: Dress}> = ({dress}) => {
             setModalState(true)}}
         >
           <img src={dress.image} alt={dress.title} />
-          <p>
-              { dress.title }
-          </p>
         </a>
+        <p className="product-title">
+            <span>{ dress.title }</span> 
+            <span> Sizes: 
+                <select value={choseSize} onChange={chosenSize}>
+                  <option value="XS">XS</option>
+                  <option value="S">S</option>
+                  <option value="M">M</option>
+                  <option value="L">L</option>
+                  <option value="XL">XL</option>
+                  <option value="XXL">XXL</option>
+                </select>
+            </span>
+        </p>
 
         <div className="product-price">
             <div>
                 { formatCurrency(dress.price) }
             </div>
             
-            <button onClick={() => addToCart(dress)}>Add To Cart</button>
+            <button onClick={() => addToCart({...dress, currentSize:choseSize})}>Add To Cart</button>
         </div>
       </Fade>
       
@@ -85,11 +103,11 @@ const DressItem: React.FC<{dress: Dress}> = ({dress}) => {
                 <button
                   className="button primary"
                   onClick={() => {
-                    addToCart(dress);
+                    // addToCart(dress);
                     closeModal();
                   }}
                 >
-                  Add To Cart
+                  {/* Add To Cart */}
                 </button>
               </div>
             </div>

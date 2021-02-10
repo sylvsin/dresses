@@ -23,7 +23,6 @@ mongoose.connect(
     useUnifiedTopology: true,
   }
 );
-
 const Product = mongoose.model(
   "products",
   new mongoose.Schema({
@@ -33,7 +32,7 @@ const Product = mongoose.model(
     image: String,
     price: Number,
     count: Number,
-    availableSizes: [String],
+    availableSizes: [String]
   })
 );
 
@@ -71,6 +70,7 @@ const Order = mongoose.model(
           title: String,
           price: Number,
           count: Number,
+          size: String,
         },
       ],
     },
@@ -100,6 +100,18 @@ app.get("/api/orders", async (req, res) => {
 app.delete("/api/orders/:id", async (req, res) => {
   const order = await Order.findByIdAndDelete(req.params.id);
   res.send(order);
+});
+app.put("/api/products/:id", async (req, res) => {
+  console.log(req.params.id,{...req.body})
+  const products = await Product.findByIdAndUpdate(req.params.id,{...req.body}, function (err, docs) { 
+    if (err){ 
+        console.log(err) 
+    } 
+    else{ 
+        console.log("Updated product : ", docs); 
+    } 
+});
+  res.send(products);
 });
 
 const port = process.env.PORT || 5000;
