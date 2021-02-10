@@ -20,6 +20,7 @@ const Admin: React.FC = () => {
           <span className="center">EMAIL</span>
           <span className="center">ADDRESS</span>
           <span className="center">ITEMS</span>
+          <span className="center">SIZE</span>
         </div>
 
         {

@@ -19,6 +19,7 @@ const Orders: React.FC<{order: Order}> = ({order}) => {
                     {item.count} {" x "} {item.title}
                 </span>)}
             </span>
+            <span className="center">{order.size}</span>
         </div>
     </div>
   );
