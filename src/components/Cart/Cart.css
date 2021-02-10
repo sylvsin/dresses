@@ -18,9 +18,9 @@
     grid-auto-rows: auto;
 }
 
-.row{
+.row {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     padding: 10px;
 }
 
@@ -44,10 +44,6 @@
     border-radius: 10px;
 }
 
-.cart {
-    grid-column-start: 3;
-}
-
 .amount {
     padding: 5px;
 }
@@ -60,7 +56,7 @@
   text-align: center;
   color: #fff;
   border-radius: 5px;
-  grid-column-start: 3;
+  grid-column-start: 4;
   width: 91.5%;
 }
 
@@ -75,6 +71,7 @@
 .add-new-product {
     border-radius: 5px;
     cursor: pointer;
+    text-align: center;
 }
 
 /* forms */

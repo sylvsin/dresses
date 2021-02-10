@@ -5,6 +5,7 @@ import Modal from 'react-modal'
 import { DressContext } from '../../context/DressContext';
 import formatCurrency from '../../util';
 import { NavLink } from 'react-router-dom';
+import { serialize } from 'v8';
 
 const customStyles = {
   content : {
@@ -18,7 +19,7 @@ const customStyles = {
   }
 };
 const Cart: React.FC = () => {
-  const {cartItems, addToCart, decrementQuantity, removeFromCart, order, createOrderItems} = useContext(DressContext);
+  const {cartItems, incrementCartItem, decrementQuantity, removeFromCart, order, createOrderItems, size} = useContext(DressContext);
   const [showCheckout, setShowCheckout] = useState<Boolean>(false);
   const [_id, set_id] = useState<string>();
   const [email, setEmail] = useState<string>("");
@@ -46,6 +47,7 @@ const Cart: React.FC = () => {
         address: address,
         createdAt: createdAt,
         cartItems: cartItems,
+        size: size,
         total: cartItems.reduce((a, c) => a + (c.price*c.count), 0),
     });  
   }
@@ -56,12 +58,13 @@ const Cart: React.FC = () => {
       <div className="cart">
         <div className="cart-table">
           <div className="row cart-header"> 
-            <span className="center">Product Image</span>
-            <span className="center">Product Title</span>
-            <span className="center">Product Action</span>
-            <span className="center">Product Price</span>
-            <span className="center">Increase Product</span>
-            <span className="center">Decrease Product</span>
+            <span className="center">Image</span>
+            <span className="center">Title</span>
+            <span className="center">Size</span>
+            <span className="center">Action</span>
+            <span className="center">Price</span>
+            <span className="center">Increase</span>
+            <span className="center">Decrease</span>
           </div>
         </div>
 
@@ -104,6 +107,10 @@ const Cart: React.FC = () => {
                                   return <div key={x._id}>{x.count} {" x "} {x.title}</div>
                               })}</div>
                           </li>
+                          <li>
+                            <div>Size:</div>
+                            <div>{order?.size}</div>
+                          </li>
                       </ul>
                   </div>
               </Modal>
@@ -119,6 +126,7 @@ const Cart: React.FC = () => {
                           <img src={item.image} alt={item.title} height="50px" width="50px"/> {" "}
                         </div>
                           <span className="center">{item.title}</span>
+                          <span className="center">{item.size}</span>
                           <button
                             onClick={() => removeFromCart(item._id)}
                             className="remove-from-cart-button"
@@ -126,7 +134,7 @@ const Cart: React.FC = () => {
                             Remove
                           </button>
                         <span className="center">{item.count} x {formatCurrency(item.price)}</span>
-                        <span onClick={() => addToCart(item)} className="center"><button className="quantity">+</button></span>
+                        <span onClick={() => incrementCartItem(item)} className="center"><button className="quantity">+</button></span>
                         <span  onClick={() => decrementQuantity(item)} className="center"><button className="quantity">-</button></span>  
                   </div>
                 )

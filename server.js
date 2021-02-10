@@ -70,6 +70,7 @@ const Order = mongoose.model(
           title: String,
           price: Number,
           count: Number,
+          size: String,
         },
       ],
     },

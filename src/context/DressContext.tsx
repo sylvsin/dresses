@@ -1,3 +1,4 @@
+import { sign } from 'crypto';
 import React, { ChangeEvent, createContext, useCallback, useContext, useEffect, useState } from 'react';
 // import { products } from '../Data';
 import { AppContext } from './AppContext';
@@ -10,17 +11,28 @@ export class Dress {
     availableSizes!: string[];
     price!: number;
     count!: number;
+    currentSize?: string
+}
+
+export interface CartItem {
+  _id: number;
+  size: string;
+  count: number;
+  price: number;
+  title:string;
+  image:string;
 }
 
 export interface Order{
   name:string
   email:string
   address:string
-  cartItems:Dress[]
+  cartItems:CartItem[]
   total:number
   _id:string
   createdAt:Date
   updatedAt:string
+  size: string;
 }
 
 export interface IDressContext {
@@ -29,10 +41,11 @@ export interface IDressContext {
     sort: string;
     sortDresses: (sort: any) => void;
     filterDresses: (size: any) => void;
-    cartItems: Dress[];
+    cartItems: CartItem[];
+    incrementCartItem: (cartItem:CartItem)=>void,
     addToCart: (dress: Dress) => void;
     removeFromCart: (id: number) => void;
-    decrementQuantity: (dress: Dress) => void;
+    decrementQuantity: (cartItem: CartItem) => void;
     order?: Order;
     createOrderItems: (item: any) => void;
     orders: Order[];
@@ -40,14 +53,16 @@ export interface IDressContext {
 
 export const DressContext = createContext<IDressContext>({
     products: [],
+
     size: "",
     sort: "",
+    incrementCartItem: (cartItem)=>{},
     sortDresses: (sort: any) => {},
     filterDresses: (size: any) => {},
     cartItems: [],
     addToCart: (dress: Dress) => {},
     removeFromCart: (id: number) => {},
-    decrementQuantity: (dress: Dress) => {},
+    decrementQuantity: (cartItem: CartItem) => {},
     createOrderItems: (item: any) => {},
     orders: [],
 });
@@ -60,7 +75,7 @@ const DressContextProvider: React.FC = ({children}) => {
     const [products, setProducts] = useState<Dress[]>([]);
     const [size, setSize] = useState<string>("");
     const [sort, setSort] = useState<string>("");
-    const [cartItems, setCartItems] = useState<Dress[]>(myDresses);
+    const [cartItems, setCartItems] = useState<CartItem[]>(myDresses);
     const { api } = useContext(AppContext);
     const [order, setOrder] = useState<Order>();
     const [orders, setOrders] = useState<Order[]>([]);
@@ -87,6 +102,14 @@ const DressContextProvider: React.FC = ({children}) => {
       }
     }, [api] );
 
+    const incrementCartItem = useCallback((cartItem:CartItem)=>{
+      const pos = cartItems.findIndex(item => item._id === cartItem._id && item.size===cartItem.size);
+      if(pos!==-1){
+        setCartItems([...cartItems.slice(0, pos), ...[{...cartItems[pos], count:cartItems[pos].count+1}], ...cartItems.slice(pos+1)]);
+      }
+  
+    },[cartItems])
+
     let createOrderItems = (item: any) => {
       const order = {
           _id: item._id,
@@ -94,6 +117,7 @@ const DressContextProvider: React.FC = ({children}) => {
           email: item.email,
           address: item.address,
           cartItems: cartItems,
+          size: size,
           total: cartItems.reduce((a,b) => a + b.price*b.count, 0),
       };
       createOrderItems2(order);   
@@ -197,10 +221,10 @@ const DressContextProvider: React.FC = ({children}) => {
 
     const addToCart = (product: Dress) => {
 
-      const doesExist = cartItems.find(item => item._id === product._id);
+      const doesExist = cartItems.find(item => item._id === product._id && item.size===product?.currentSize);
   
       if(!doesExist) {
-        setCartItems([...cartItems, ...[{...product, count:1}]]);
+        setCartItems([...cartItems, ...[{image:product.image,title:product.title,size:product.currentSize??"M", _id:product._id, price:product.price, count:1}]]);
       } else {
         const pos = cartItems.findIndex(item => item._id === product._id)
         if(pos!==-1)
@@ -208,8 +232,8 @@ const DressContextProvider: React.FC = ({children}) => {
       }
     }
 
-    const decrementQuantity = (product: Dress) => {
-      const pos = cartItems.findIndex(item => item._id === product._id)
+    const decrementQuantity = (product: CartItem) => {
+      const pos = cartItems.findIndex(item => item._id === product._id && item.size===product.size)
         if(pos!==-1){
           const count = cartItems[pos].count-1 < 1 ? 1 : cartItems[pos].count-1
         setCartItems( [...cartItems.slice(0, pos), ...[{...cartItems[pos], count},], ...cartItems.slice(pos+1)]);
@@ -218,7 +242,7 @@ const DressContextProvider: React.FC = ({children}) => {
 
 
     return (
-        <DressContext.Provider value={{products, sort, size, sortDresses, filterDresses, cartItems, addToCart, decrementQuantity, removeFromCart, order, createOrderItems, orders }}>
+        <DressContext.Provider value={{incrementCartItem,products, sort, size, sortDresses, filterDresses, cartItems, addToCart, decrementQuantity, removeFromCart, order, createOrderItems, orders }}>
             {children}
         </DressContext.Provider>
     );
