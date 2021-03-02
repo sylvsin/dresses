@@ -1,14 +1,24 @@
-import React, { useContext } from 'react';
-import './Admin.css';
+import React, { useContext, useState } from 'react';
 import Orders from '../Oders/Oders';
 import { DressContext } from '../../context/DressContext';
+import Login from '../Login/Login';
+
+import './Admin.css';
+
 import { Fade } from 'react-awesome-reveal';
+
 
 const Admin: React.FC = () => {
   const { orders } = useContext(DressContext);
 
+  const [token, setToken] = useState();
+
+  if(!token) {
+    return <Login setToken={setToken} />
+  }
+
   return (
-    <Fade direction="up">
+    <Fade direction="up">  
     <div>
       <h2>Orders</h2>
       <div className="admin">
