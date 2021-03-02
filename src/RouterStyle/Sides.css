@@ -1,0 +1,22 @@
+.sides {
+    display: flex;
+}
+
+.sidebar {
+    padding: 20px;
+    width: 15%;
+    height: 140vh;
+    background: #f0f0f0;    
+}
+
+.linksStyle {
+    list-style: none;
+    text-decoration: none;
+    padding: 0;
+}
+
+.mainStyle {
+    flex: 1;
+    padding: "10px";
+    background-color: "eee";
+}

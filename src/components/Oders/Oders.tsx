@@ -14,11 +14,13 @@ const Orders: React.FC<{order: Order}> = ({order}) => {
             <span className="center">{order.name}</span>
             <span className="center">{order.email}</span>
             <span className="center">{order.address}</span>
-            <span className="center">
-                {order.cartItems.map(item => <span>
-                    {item.count} {" x "} {item.title}
-                </span>)}
-            </span>
+            {order.cartItems.map(item => 
+            <>
+              <span className="center">{item.count} {" x "} {item.title}</span>
+              <span className="center">{item.size}</span>
+                
+            </>
+            )}
         </div>
     </div>
   );

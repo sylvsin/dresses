@@ -103,13 +103,16 @@ const Cart: React.FC = () => {
                           </li>
                           <li>
                               <div>Cart Items:</div>
-                              <div>{order?.cartItems.map((x, i) => {
-                                  return <div key={x._id}>{x.count} {" x "} {x.title}</div>
-                              })}</div>
+                              {order?.cartItems.map((x, i) => {
+                                  return( 
+                                  <div>
+                                    <div key={x._id}>{x.count} {" x "} {x.title}</div>
+                                    <div>Size: {x.size}</div>
+                                  </div>
+                              )})}
                           </li>
                           <li>
-                            <div>Size:</div>
-                            <div>{order?.size}</div>
+                            
                           </li>
                       </ul>
                   </div>

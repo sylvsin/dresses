@@ -10,7 +10,13 @@ app.use(express.json())
 app.use(bodyParser.json()); //Make sure you have added this line
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(cors())
+app.use(cors());
+
+app.use('/login', (req, res) => {
+  res.send({
+      token: 'test123'
+  });
+});
 
 app.use("/", express.static(__dirname + "/build"));
 app.get("/", (req, res) => res.sendFile(__dirname + "/build/index.html"));

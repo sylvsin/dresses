@@ -3,21 +3,17 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  NavLink
 } from "react-router-dom";
 
 import Admin from './components/Administration/Admin';
 import Cart from './components/Cart/Cart';
 import DressList from './components/DressList/DressList';
-import './App.css';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { fas } from '@fortawesome/free-solid-svg-icons';
 import DressContextProvider from './context/DressContext';
 import { AppContextProvider } from './context/AppContext';
+import Nav from './components/Nav/Nav';
 
-library.add(fas);
+import './App.css';
+import './RouterStyle/Sides.css'
 
 const baseURL: string = `${process.env.REACT_APP_IS_PRODUCTION?process.env.REACT_APP_REMOTE_URL:process.env.REACT_APP_LOCAL_PATH}/api/`;
 
@@ -41,12 +37,6 @@ const App: React.FC = () => {
     },
   ];
 
-  const dressesStyle = {
-    listStyle: "none",
-    textDecoration: "none",
-    padding: 0
-  }
-
   return (
     <div className="App">
       <header>
@@ -56,30 +46,10 @@ const App: React.FC = () => {
       <AppContextProvider baseUrl={baseURL}>
         <DressContextProvider>
           <Router>
-            <div style={{ display: "flex" }}>
-              <div className="sidebar"
-                style={{ 
-                  padding: "20px",
-                  width: "15%",
-                  height: "140vh",
-                  background: "#f0f0f0",
-                }}
-              >
-                <ul style={ dressesStyle }>
-                  <li>
-                    <NavLink exact to="/" activeClassName="selected" activeStyle={{fontWeight: "bold",color: "#2F4F4F"}}><img src="/images/logo1.jpg"  alt=''/></NavLink>
-                  </li>
-                  <li>
-                    <NavLink exact to="/" activeClassName="selected" activeStyle={{fontWeight: "bold",color: "#2F4F4F"}} style={{ textDecoration: "none" }}><FontAwesomeIcon className="fas fa-home" icon='home'/>Dresses</NavLink>
-                  </li>
-                  <li>
-                    <NavLink exact to="/cart" activeClassName="selected" activeStyle={{fontWeight: "bold",color: "#2F4F4F"}} style={{ textDecoration: "none" }}><FontAwesomeIcon className="fas fa-cart-plus" icon='cart-plus'/>{" "}  Cart</NavLink>
-                  </li>
-                  <li>
-                    <NavLink exact to="/admin" activeClassName="selected" activeStyle={{fontWeight: "bold",color: "#2F4F4F"}} style={{ textDecoration: "none" }}><FontAwesomeIcon className="fas fa-user" icon='user' />{" "} Admin</NavLink>
-                  </li>
-                </ul>
-
+            <div className="sides">
+              <div className="sidebar">
+                <Nav />
+                
                 <Switch>
                   {
                     routes.map((route, index) => (
