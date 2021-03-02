@@ -53,6 +53,12 @@ app.post("/api/products", async (req, res) => {
   res.send(savedProduct);
 });
 
+app.post("/api/login",(req, res) => {
+  res.send({
+      token: 'test123'
+  });
+});
+
 app.delete("/api/products/:id", async (req, res) => {
   const deletedProduct = await Product.findByIdAndDelete(req.params.id);
   res.send(deletedProduct);
