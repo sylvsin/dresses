@@ -54,6 +54,19 @@ app.post("/api/products", async (req, res) => {
 });
 
 app.post("/api/login",(req, res) => {
+  // get the body
+  // check against database
+  // if user exists in database and password matches in database
+  // return success
+  // return failure
+
+  res.send({
+      token: 'test123'
+  });
+});
+app.post("/api/register",(req, res) => {
+  // get the body
+  // register username and password in the database
   res.send({
       token: 'test123'
   });
